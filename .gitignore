@@ -1,0 +1,22 @@
+# Vivado / AMD Design Tools
+*.cache/
+*.hw/
+*.ip_user_files/
+*.sim/
+*.runs/
+*.xpr
+*.log
+*.jou
+xsim.dir/
+xsim.ini
+*.pb
+*.str
+*.wdb
+.Xil/
+
+# Simulation outputs
+sim.vvp
+*.vcd
+
+# Temporary scripts
+organize.py
