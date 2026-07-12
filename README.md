@@ -1,70 +1,53 @@
-# Foundational Digital Design & Verilog HDL Portfolio
+# Verilog HDL Designs & Projects
 
-Welcome to my digital design portfolio. This repository contains a comprehensive collection of fundamental combinational and sequential logic circuits designed and implemented in synthesizable **Verilog HDL** and verified using **Xilinx Vivado** simulation testbenches.
+This repository contains my Verilog HDL designs and testbenches, developed and simulated using Xilinx Vivado. The projects are split into system-level designs and foundational digital building blocks.
 
-This repository serves as a showcase of my understanding of RTL design, testbench verification, and digital system fundamentals, built during my B.Tech ECE studies at DDU Nadiad.
-
----
-
-## 📂 Repository Structure
-
-*   **`src/`**: Contains the Verilog source code for all design modules.
-*   **`tb/`**: Contains the testbenches used to simulate and verify each design.
-*   **`.gitignore`**: Excludes heavy Vivado-generated directories (`.cache`, `.hw`, `.sim`, etc.) to keep the repository lightweight and clean.
+## 📂 Directory Layout
+*   `/src`: Verilog design source files (`.v`)
+*   `/tb`: Testbenches for verification (`.v`)
 
 ---
 
-## 🛠️ Implemented Design Modules
+## 🚀 System-Level RTL Designs (Complex Projects)
 
-The repository is categorized into five key areas of digital design:
+These are larger, state-machine driven or buffer-based designs that integrate multiple blocks.
 
-### 1. Advanced Sequential & System Designs (New!)
-*   **Synchronous FIFO Buffer (`fifo_8_8.v`):** An 8x8 FIFO queue containing read/write pointers, independent write/read controls for simultaneous dual-port operations, and flag logic (`full`, `empty`) to manage data flow.
-*   **Emergency-Safe Elevator Controller (`lift_controller.v`):** A complex FSM for a 4-floor building. It handles floor requests, motor direction (`up`/`down`/`stop`), door timer control, one-hot to binary request mapping, and an emergency stop line to freeze the lift state.
-*   **Traffic Light Controller (`traffic_light_controller.v`):** A Moore FSM implementing a timing cycle (Green: 10s, Yellow: 2s, Green: 5s, Yellow: 2s) for an intersection of a Main Street and a Side Street, using an internal timer counter.
-*   **Top FIFO System Wrapper (`top_fifo.v`):** Demonstrates structural system-level integration. It wires a data transmitter (`mod_a`) and a receiver FSM (`mod_b`) around the FIFO queue as a pipeline communication channel.
-
-### 2. Arithmetic & Addition Circuits
-*   **Half Adder / Subtractor:** Foundational 1-bit arithmetic cells modeled at the gate level.
-*   **Full Adder / Subtractor:** Modeled structurally using two half-adder/subtractor cells and primitive gates.
-*   **4-Bit Ripple Carry Adder:** Cascaded Full Adders demonstrating carry propagation.
-*   **BCD Adder:** Implements binary-coded decimal addition with correction logic ($+6$ correction) for sums greater than 9.
-
-### 3. Combinational Logic Blocks
-*   **Multiplexers (2:1 and 4:1 MUX):** Signal selection blocks designed using behavioral case statements.
-*   **Demultiplexer (1:2 DEMUX):** Data routing block demonstrating prevention of unintentional latches.
-*   **Decoder (2:4 Decoder):** Selects one of 4 outputs based on a 2-bit binary input.
-*   **Encoders (4:2 Encoder & Priority Encoder):** Implements binary encoding and priority resolution logic using case statements.
-
-### 4. Level-Sensitive Latches
-*   **SR Latch & JK Latch:** Basic bistable elements designed with gate-level feedback loop logic.
-*   **D Latch & T Latch:** Gated data and toggle latches showing level-sensitive enable control.
-
-### 5. Sequential Shift Registers (RTL Registers)
-*   **SISO (Serial-In Serial-Out):** Shifts data bit-by-bit; demonstrates serial time-delay paths.
-*   **SIPO (Serial-In Parallel-Out):** Deserialization circuit converting serial inputs into a 4-bit parallel bus.
-*   **PISO (Parallel-In Serial-Out):** Serialization circuit featuring a control line for parallel loading and serial shifting.
-*   **PIPO (Parallel-In Parallel-Out):** Basic register that loads and outputs data in parallel.
-*   **Universal Shift Register (USR):** Implements left-shift, right-shift, parallel-load, and hold modes controlled by a mode selector input.
+*   **Synchronous FIFO Buffer (`fifo_8_8.v`):** An 8x8 FIFO queue with read/write pointers, status flags (`full`, `empty`), and independent write/read controls for simultaneous operations.
+*   **Elevator (Lift) Controller (`lift_controller.v`):** An FSM-based controller for a 4-floor building. Features direction control, door timers, a one-hot request resolver, and an emergency stop line.
+*   **Traffic Light Controller (`traffic_light_controller.v`):** A Moore FSM managing a Main Street/Side Street intersection using a clocked cycle counter for state durations.
+*   **Top FIFO System Wrapper (`top_fifo.v`):** Structural top-level design wiring a data transmitter (`mod_a`) and a receiver FSM (`mod_b`) around the FIFO queue.
 
 ---
 
-## 🎓 Key Hardware Concepts Demonstrated
+## 🛠️ Foundational Digital Blocks
 
-Through these designs, I have mastered the following fundamental concepts:
-*   **Design Methodologies:** Gate-Level Modeling, Dataflow Modeling (continuous assignments), and Behavioral Modeling (`always` blocks).
-*   **Blocking (`=`) vs. Non-Blocking (`<=`) Assignments:** Proper use of blocking assignments for combinational logic and non-blocking assignments for sequential registers to prevent race conditions.
-*   **Latch Avoidance:** Structuring conditional statements (`if-else` and `case`) to fully define all outputs in all branches, preventing the compiler from generating unintentional latches.
-*   **Reset Strategies:** Understanding the advantages and design implications of **Synchronous Resets** (sampled on clock edges) vs. **Asynchronous Resets** (immediate action).
-*   **System Integration:** Building hierarchical designs by instantiating sub-modules (like RAM, FIFO, and FSMs) and wiring them together using structural Verilog.
+These are standard combinational and sequential blocks that form the building blocks of digital logic.
+
+### 1. Shift Registers & Memory
+*   **Universal Shift Register (`universal_register.v`):** Left-shift, right-shift, parallel-load, and hold modes.
+*   **SISO / SIPO / PISO / PIPO:** Basic serial/parallel shifting configurations.
+*   **RAM 8x8 (`RAM_8_8.v`):** Simple read/write memory bank.
+
+### 2. Latches
+*   **SR / JK / D / T Latches:** Level-sensitive feedback storage elements.
+
+### 3. MUX, DEMUX, Decoders & Encoders
+*   **Multiplexers:** 2:1 and 4:1 behavioral multiplexers.
+*   **Demultiplexer:** 1:2 routing block.
+*   **Decoder:** 2:4 binary decoder.
+*   **Encoders:** 4:2 encoder and 4:2 priority encoder.
+
+### 4. Adders & Subtractors
+*   **BCD Adder (`bcd_adder.v`):** Binary-coded decimal addition with $+6$ correction logic.
+*   **Ripple Carry Adder (`ripple_carry_adder.v`):** 4-bit carry-propagation adder.
+*   **Half/Full Adder & Subtractor:** Gate-level and structural arithmetic cells.
 
 ---
 
-## 🚀 How to Run & Verify
+## 💻 Simulation & Verification
 
-1.  Open **Xilinx Vivado**.
-2.  Create a new RTL Project.
-3.  Add the contents of the `src/` folder as **Design Sources**.
-4.  Add the contents of the `tb/` folder as **Simulation Sources**.
-5.  In the Sources hierarchy pane, right-click the testbench you want to run (e.g., `lift_controller_tb.v`) and select **Set as Top**.
-6.  Go to the Flow Navigator on the left and click **Run Simulation** ➔ **Run Behavioral Simulation**.
+To run behavioral simulations:
+1. Open **Xilinx Vivado** and create an RTL project.
+2. Add files from `/src` as **Design Sources** and `/tb` as **Simulation Sources**.
+3. Right-click the desired testbench (e.g., `lift_controller_tb.v`) ➔ **Set as Top**.
+4. Click **Run Simulation** ➔ **Run Behavioral Simulation**.
