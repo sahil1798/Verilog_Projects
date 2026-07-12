@@ -16,25 +16,31 @@ This repository serves as a showcase of my understanding of RTL design, testbenc
 
 ## 🛠️ Implemented Design Modules
 
-The repository is categorized into four key areas of digital design:
+The repository is categorized into five key areas of digital design:
 
-### 1. Arithmetic & Addition Circuits
+### 1. Advanced Sequential & System Designs (New!)
+*   **Synchronous FIFO Buffer (`fifo_8_8.v`):** An 8x8 FIFO queue containing read/write pointers, independent write/read controls for simultaneous dual-port operations, and flag logic (`full`, `empty`) to manage data flow.
+*   **Emergency-Safe Elevator Controller (`lift_controller.v`):** A complex FSM for a 4-floor building. It handles floor requests, motor direction (`up`/`down`/`stop`), door timer control, one-hot to binary request mapping, and an emergency stop line to freeze the lift state.
+*   **Traffic Light Controller (`traffic_light_controller.v`):** A Moore FSM implementing a timing cycle (Green: 10s, Yellow: 2s, Green: 5s, Yellow: 2s) for an intersection of a Main Street and a Side Street, using an internal timer counter.
+*   **Top FIFO System Wrapper (`top_fifo.v`):** Demonstrates structural system-level integration. It wires a data transmitter (`mod_a`) and a receiver FSM (`mod_b`) around the FIFO queue as a pipeline communication channel.
+
+### 2. Arithmetic & Addition Circuits
 *   **Half Adder / Subtractor:** Foundational 1-bit arithmetic cells modeled at the gate level.
 *   **Full Adder / Subtractor:** Modeled structurally using two half-adder/subtractor cells and primitive gates.
 *   **4-Bit Ripple Carry Adder:** Cascaded Full Adders demonstrating carry propagation.
 *   **BCD Adder:** Implements binary-coded decimal addition with correction logic ($+6$ correction) for sums greater than 9.
 
-### 2. Combinational Logic Blocks
+### 3. Combinational Logic Blocks
 *   **Multiplexers (2:1 and 4:1 MUX):** Signal selection blocks designed using behavioral case statements.
 *   **Demultiplexer (1:2 DEMUX):** Data routing block demonstrating prevention of unintentional latches.
 *   **Decoder (2:4 Decoder):** Selects one of 4 outputs based on a 2-bit binary input.
 *   **Encoders (4:2 Encoder & Priority Encoder):** Implements binary encoding and priority resolution logic using case statements.
 
-### 3. Level-Sensitive Latches
+### 4. Level-Sensitive Latches
 *   **SR Latch & JK Latch:** Basic bistable elements designed with gate-level feedback loop logic.
 *   **D Latch & T Latch:** Gated data and toggle latches showing level-sensitive enable control.
 
-### 4. Sequential Shift Registers (RTL Registers)
+### 5. Sequential Shift Registers (RTL Registers)
 *   **SISO (Serial-In Serial-Out):** Shifts data bit-by-bit; demonstrates serial time-delay paths.
 *   **SIPO (Serial-In Parallel-Out):** Deserialization circuit converting serial inputs into a 4-bit parallel bus.
 *   **PISO (Parallel-In Serial-Out):** Serialization circuit featuring a control line for parallel loading and serial shifting.
@@ -50,6 +56,7 @@ Through these designs, I have mastered the following fundamental concepts:
 *   **Blocking (`=`) vs. Non-Blocking (`<=`) Assignments:** Proper use of blocking assignments for combinational logic and non-blocking assignments for sequential registers to prevent race conditions.
 *   **Latch Avoidance:** Structuring conditional statements (`if-else` and `case`) to fully define all outputs in all branches, preventing the compiler from generating unintentional latches.
 *   **Reset Strategies:** Understanding the advantages and design implications of **Synchronous Resets** (sampled on clock edges) vs. **Asynchronous Resets** (immediate action).
+*   **System Integration:** Building hierarchical designs by instantiating sub-modules (like RAM, FIFO, and FSMs) and wiring them together using structural Verilog.
 
 ---
 
@@ -59,5 +66,5 @@ Through these designs, I have mastered the following fundamental concepts:
 2.  Create a new RTL Project.
 3.  Add the contents of the `src/` folder as **Design Sources**.
 4.  Add the contents of the `tb/` folder as **Simulation Sources**.
-5.  In the Sources hierarchy pane, right-click the testbench you want to run (e.g., `siso_tb.v`) and select **Set as Top**.
+5.  In the Sources hierarchy pane, right-click the testbench you want to run (e.g., `lift_controller_tb.v`) and select **Set as Top**.
 6.  Go to the Flow Navigator on the left and click **Run Simulation** ➔ **Run Behavioral Simulation**.

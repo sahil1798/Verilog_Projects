@@ -18,5 +18,9 @@ xsim.ini
 sim.vvp
 *.vcd
 
-# Temporary scripts
-organize.py
+# Ignore local Vivado project directories
+behavioural_modelling_codes/
+data_flow_modelling_codes/
+*bcdadder*/
+project_abhi/
+projects/
