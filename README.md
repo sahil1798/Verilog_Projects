@@ -15,7 +15,13 @@ Verilog_Projects/
 │   ├── Elevator_Controller/         # Emergency-safe lift FSM
 │   │   ├── src/
 │   │   └── tb/
-│   └── Traffic_Light_Controller/    # Moore FSM traffic cycle manager
+│   ├── Traffic_Light_Controller/    # Moore FSM traffic cycle manager
+│   │   ├── src/
+│   │   └── tb/
+│   ├── UART_Transmitter/            # Synthesizable 9600 Baud UART TX
+│   │   ├── src/
+│   │   └── tb/
+│   └── UART_Receiver/               # Oversampled 9600 Baud UART RX (with loopback TB)
 │       ├── src/
 │       └── tb/
 └── Foundational_Blocks/             # Standard digital logic blocks
@@ -40,10 +46,12 @@ Verilog_Projects/
 *   **Synchronous FIFO Buffer (`Complex_Systems/FIFO_Buffer`):** An 8x8 FIFO queue with read/write pointers, status flags (`full`, `empty`), and independent write/read controls for simultaneous operations. Includes structural wrapping with a transmitter (`mod_a`) and a receiver FSM (`mod_b`).
 *   **Elevator (Lift) Controller (`Complex_Systems/Elevator_Controller`):** An FSM-based controller for a 4-floor building. Features direction control, door timers, a one-hot request resolver, and an emergency stop line.
 *   **Traffic Light Controller (`Complex_Systems/Traffic_Light_Controller`):** A Moore FSM managing a Main Street/Side Street intersection using a clocked cycle counter for state durations.
+*   **UART Transmitter (`Complex_Systems/UART_Transmitter`):** A synthesizable UART Transmitter operating at 9600 Baud (for a 100 MHz clock). Uses a Moore FSM to shift out 8 data bits LSB-first, bookended by start and stop bits, with status flags (`tx_active`, `tx_done`).
+*   **UART Receiver (`Complex_Systems/UART_Receiver`):** A synthesizable UART Receiver featuring a 16x oversampling baud rate clock divider (651 clock cycles per sample tick) and an FSM-based noise/glitch filter. Instantiates both TX and RX in a loopback testbench to verify end-to-end serial data transfer.
 
 ---
 
-## 🛠] Foundational Digital Blocks
+## 🛠️ Foundational Digital Blocks
 
 These are standard combinational and sequential building blocks:
 
@@ -59,5 +67,5 @@ These are standard combinational and sequential building blocks:
 To run behavioral simulations:
 1. Open **Xilinx Vivado** and create an RTL project.
 2. Add files from the desired `/src` folder as **Design Sources** and the corresponding `/tb` folder as **Simulation Sources**.
-3. Right-click the testbench file (e.g., `lift_controller_tb.v`) ➔ **Set as Top**.
+3. Right-click the testbench file (e.g., `uart_tx_rx_tb.v`) ➔ **Set as Top**.
 4. Click **Run Simulation** ➔ **Run Behavioral Simulation**.
