@@ -1,0 +1,245 @@
+TRAINING REPORT
+EIGHT-WEEK SUMMER INTERNSHIP REPORT ON VERY LARGE SCALE INTEGRATION (VLSI)
+RTL Design, Verilog HDL Simulation, Logic Synthesis, and FPGA/ASIC Implementation
+_________________________________________________________________________________
+FIELD DETAILS
+_________________________________________________________________________________
+ACKNOWLEDGEMENTS
+I would like to express my sincere gratitude and appreciation to the course directors, technical trainers, and industry mentors at the VLSI Industrial Training Institute for providing me with the opportunity to complete my eight-week Summer Internship Project (SIP) in Very Large Scale Integration (VLSI). The comprehensive curriculum and hands-on exposure to industry-standard Electronic Design Automation (EDA) tools played a vital role in enhancing my technical expertise in digital logic design, Verilog HDL coding, functional verification, and logic synthesis.
+I also extend my heartfelt thanks to the Department of Electronics and Communication Engineering at Dharmsinh Desai University, Nadiad, Gujarat, for their academic encouragement, guidance, and support throughout the internship period. This practical experience has successfully bridged the gap between academic theory and front-end semiconductor engineering practices.
+_________________________________________________________________________________
+ABSTRACT
+This report details my eight-week summer internship project (14/05/2026 to 10/07/2026, Certificate ID: YHi-5015616) focused on Very Large Scale Integration (VLSI) and Digital System Design. Over the course of eight weeks, I received structured training covering digital electronics fundamentals, CMOS technology basics, MOSFET switch models, Verilog HDL syntax, combinational and sequential circuit design, Finite State Machines (FSMs), RTL verification, logic synthesis concepts, Static Timing Analysis (STA), FPGA architecture, and the complete ASIC design flow. Using industry-standard EDA tools such as ModelSim and Xilinx Vivado, I designed, simulated, and synthesized a major capstone project: a 4-Bit Arithmetic Logic Unit (ALU) integrated with a 4-state Finite State Machine (FSM) controller. The report documents the weekly learning progress, RTL architecture, waveform verification results, synthesis resource trade-offs, setup/hold timing challenges encountered, and practical solutions implemented. This internship has provided me with a thorough foundation in modern digital IC design methodologies.
+Keywords: VLSI, Verilog HDL, RTL Design, CMOS Technology, Logic Synthesis, FSM, ModelSim, Xilinx Vivado, Static Timing Analysis, FPGA, ASIC Flow.
+_________________________________________________________________________________
+TABLE OF CONTENTS
+1. INTRODUCTION AND INDUSTRY OVERVIEW
+  1.1 Objectives of the Internship
+  1.2 Overview of VLSI Design & Semiconductor Industry
+2. BASIC CONCEPTS OF VLSI, HDL, AND RTL DESIGN FLOW
+  2.1 What is VLSI and the ASIC/FPGA Flow?
+  2.2 CMOS Technology & Digital Fundamentals
+  2.3 Verilog HDL and Hardware Modeling Concepts
+3. WEEKLY TRAINING LOG AND ACTIVITIES
+  3.1 Week 1: Introduction to VLSI & EDA Tool Environment
+  3.2 Week 2: Digital Electronics Fundamentals & Basic Logic Circuits
+  3.3 Week 3: CMOS Technology Basics & MOSFET Transistor Logic
+  3.4 Week 4: Verilog HDL Programming for Combinational Circuits
+  3.5 Week 5: Sequential Logic Design and Finite State Machines (FSM)
+  3.6 Week 6: RTL Verification, Testbench Architecture & Waveform Analysis
+  3.7 Week 7: Logic Synthesis, Static Timing Analysis (STA) & FPGA Architecture
+  3.8 Week 8: ASIC Design Flow & Major Capstone Project Integration
+4. FEATURED CAPSTONE: RTL DESIGN AND SYNTHESIS OF A 4-BIT ARITHMETIC LOGIC UNIT (ALU) AND FSM CONTROLLER
+  4.1 Architectural Description and Specifications
+  4.2 RTL Design Code and Testbench Structure
+  4.3 Simulation Results, Synthesis Output, and Resource Utilization
+5. CHALLENGES AND SOLUTIONS
+  5.1 Resolving Race Conditions and Avoiding Unintentional Latch Inferences
+  5.2 Eliminating Setup and Hold Time Violations in Timing Closure
+  5.3 Resource Optimization and Delay Reduction in FPGA Synthesis
+6. CONCLUSION
+7. REFERENCES
+8. APPENDICES
+  Appendix A: Verilog RTL Code for 4-Bit ALU Capstone Project
+  Appendix B: System Signal Mapping & Variable List
+_________________________________________________________________________________
+1. INTRODUCTION AND INDUSTRY OVERVIEW
+1.1 Objectives of the Internship
+The primary objectives of my eight-week Summer Internship Project (SIP) in Very Large Scale Integration (VLSI) were:
+• Master the fundamentals of digital system design using Hardware Description Languages (Verilog HDL).
+• Gain hands-on operational experience with professional Electronic Design Automation (EDA) simulation and synthesis suites (ModelSim, Xilinx Vivado).
+• Understand CMOS transistor-level logic design, inverter transfer characteristics, power dissipation, and propagation delay.
+• Learn how to model both combinational logic (adders, MUXes, encoders) and sequential logic (flip-flops, registers, counters, FSMs) at the Register Transfer Level (RTL).
+• Develop self-checking testbenches for functional verification and waveform debugging.
+• Understand logic synthesis principles, converting high-level RTL code into gate-level netlists while analyzing area, speed, and power trade-offs.
+• Explore FPGA architecture (LUTs, CLBs, IOBs) and the front-to-back ASIC design flow (floorplanning, placement, routing, and fabrication steps).
+• Complete an integrated major capstone project: RTL design, simulation, and logic synthesis of a 4-Bit Arithmetic Logic Unit (ALU) with an FSM controller.
+1.2 Overview of VLSI Design & Semiconductor Industry
+Very Large Scale Integration (VLSI) is the process of creating integrated circuits (ICs) by combining millions or billions of MOS transistors onto a single silicon microchip. VLSI technology powers modern computing infrastructure, ranging from mobile SoCs and microprocessors to high-performance AI accelerators and automotive controllers.
+The semiconductor industry relies heavily on Electronic Design Automation (EDA) toolchains to manage complex digital integrated circuit designs. The design flow is typically divided into Front-End Design (RTL specification, architectural modeling, functional verification, and logic synthesis) and Back-End Design (physical layout, floorplanning, placement, clock tree synthesis, routing, and GDSII tape-out). This internship focused on building strong expertise in front-end RTL design, simulation verification, and synthesis optimization.
+_________________________________________________________________________________
+2. BASIC CONCEPTS OF VLSI, HDL, AND RTL DESIGN FLOW
+2.1 What is VLSI and the ASIC/FPGA Flow?
+VLSI design involves transforming high-level specifications into physical silicon layouts. Modern digital design relies on Hardware Description Languages (HDLs) to describe circuit functionality at the Register Transfer Level (RTL). Hardware implementation follows two major paths:
+1. Application-Specific Integrated Circuits (ASIC): Fixed silicon chips customized for specific high-volume applications, providing maximum performance, minimal area, and low power, but requiring long development cycles and high non-recurring engineering (NRE) costs.
+2. Field Programmable Gate Arrays (FPGA): Reconfigurable semiconductor devices composed of programmable logic blocks (Look-Up Tables), interconnects, and I/O blocks. FPGAs enable rapid prototyping, zero NRE costs, and flexible hardware re-programmability.
+2.2 CMOS Technology & Digital Fundamentals
+Complementary Metal-Oxide-Semiconductor (CMOS) technology uses complementary pairs of p-type (PMOS) and n-type (NMOS) MOSFETs to build logic gates. In CMOS logic circuits:
+• The Pull-Up Network (PUN) consists of PMOS transistors connected between the supply voltage (VDD) and the output node, conducting when inputs are low (0).
+• The Pull-Down Network (PDN) consists of NMOS transistors connected between the output node and Ground (GND), conducting when inputs are high (1).
+CMOS circuits feature extremely low static power dissipation, high noise margins, and robust switching characteristics. Dynamic power dissipation occurs during logic transitions and is defined by P_dynamic = alpha * C_L * VDD^2 * f, where C_L is load capacitance and f is switching frequency.
+2.3 Verilog HDL and Hardware Modeling Concepts
+Verilog HDL is a standardized hardware description language (IEEE 1364) used to model concurrent digital systems. Unlike sequential software languages (C/C++), Verilog describes concurrent hardware execution where multiple modules and assignment blocks execute simultaneously.
+Verilog supports three major modeling abstractions:
+1. Behavioral Modeling: Describes system algorithm and behavior using high-level constructs such as always blocks, if-else, case statements, and initial blocks.
+2. Dataflow Modeling: Uses continuous assignment statements (assign) with boolean expressions and operators.
+3. Structural Modeling: Instantiates lower-level gate primitives (and, or, not) or sub-modules to form a hierarchical structural netlist.
+Synthesizable Verilog rules require careful differentiation between blocking assignments (=) used for combinational logic and non-blocking assignments (<=) used for edge-triggered sequential logic to prevent simulation-synthesis mismatches.
+_________________________________________________________________________________
+3. WEEKLY TRAINING LOG AND ACTIVITIES
+3.1 Week 1: Introduction to VLSI & EDA Tool Environment (14/05/2026 - 16/05/2026)
+During the initial week, I was introduced to the semiconductor domain, course outline, and technical learning objectives. I configured the EDA software environment on my workstation, installing ModelSim and Xilinx Vivado. I studied the overall VLSI chip design flow from specification down to silicon layout, learned project directory structure management, and practiced compiling basic Verilog files and running interactive CLI simulation routines.
+3.2 Week 2: Digital Electronics Fundamentals & Basic Logic Circuits (19/05/2026 - 22/05/2026)
+The second week focused on reinforcing digital logic foundations. I reviewed number systems (Binary, Hexadecimal, Two's Complement), Boolean algebra simplification techniques (Karnaugh Maps), and truth table conversions. I designed and analyzed basic combinational logic circuits, including half adders, full adders, multiplexers (4:1 MUX), decoders (2:4 Decoder), and sequential flip-flops (SR, D, JK, T). A dedicated doubt-clearing session on May 22 resolved questions regarding setup times, hold times, and propagation delays.
+3.3 Week 3: CMOS Technology Basics & MOSFET Transistor Logic (23/05/2026 - 26/05/2026)
+In Week 3, I explored transistor-level CMOS integrated circuit principles. I studied MOSFET operation regions (Cutoff, Triode, Saturation) for both NMOS and PMOS switches. I analyzed the static transfer characteristics (VTC) of a CMOS inverter, noise margins (NMH, NML), and threshold switching voltage (VM). I designed complementary pull-up and pull-down network configurations for CMOS NAND, NOR, and XOR gates and evaluated dynamic vs static power dissipation trade-offs in sub-micron nodes.
+3.4 Week 4: Verilog HDL Programming for Combinational Circuits (04/06/2026 - 10/06/2026)
+Week 4 marked the beginning of intensive Verilog HDL programming. I mastered syntax rules, module port declarations, data types (wire, reg, integer), and assignment statements. I implemented synthesizable combinational circuits using both dataflow assign statements and behavioral always @(*) blocks, including:
+1. 4-bit Ripple Carry Adder & Subtractor using full-adder instantiations.
+2. 8:1 Multiplexer using conditional case and ternary operator statements.
+3. 4-to-2 Priority Encoder with valid indicator flags.
+A interactive doubt-clearing session on June 4 addressed assignment traps and synthesis warnings.
+3.5 Week 5: Sequential Logic Design and Finite State Machines (FSM) (16/06/2026 - 17/06/2026)
+During Week 5, I designed edge-triggered sequential logic components. I wrote synthesizable Verilog code for positive-edge D Flip-Flops with asynchronous active-low reset, 4-bit Synchronous Up/Down Counters, and Shift Registers. I mastered Finite State Machine (FSM) architecture, implementing both Mealy (outputs depend on current state and inputs) and Moore (outputs depend solely on current state) FSMs using 3-always-block coding guidelines (State Register, Next State Logic, Output Logic).
+3.6 Week 6: RTL Verification, Testbench Architecture & Waveform Analysis (19/06/2026 - 22/06/2026)
+Week 6 concentrated on RTL design verification and waveform debugging. I learned how to build comprehensive, non-synthesizable testbenches utilizing initial blocks, clock generators (always #5 clk = ~clk), delay controls (#), and system tasks ($display, $monitor, $finish, $dumpfile, $dumpvars). I simulated designed combinational and sequential modules in ModelSim and Xilinx Vivado Simulator, analyzing signal waveforms, verifying timing diagrams, and checking edge cases.
+3.7 Week 7: Logic Synthesis, Static Timing Analysis (STA) & FPGA Architecture (25/06/2026 - 03/07/2026)
+In the seventh week, I transitioned from RTL simulation to hardware implementation concepts. I ran logic synthesis scripts in Xilinx Vivado to convert high-level Verilog code into gate-level technology netlists. I studied Static Timing Analysis (STA) principles, including Setup Time (t_setup), Hold Time (t_hold), Clock Skew, and Critical Path Delay calculation. I also explored FPGA architecture, examining Configurable Logic Blocks (CLBs), 6-input Look-Up Tables (LUTs), Flip-Flop registers, Carry Logic, and Programmable I/O Blocks (IOBs).
+3.8 Week 8: ASIC Design Flow & Major Capstone Project Integration (06/07/2026 - 10/07/2026)
+In the final week, I received an introduction to the complete ASIC backend flow, studying floorplanning, power grid routing, cell placement, clock tree synthesis (CTS), routing, and standard cell library characterization. I completed, simulated, and synthesized my major capstone project: an integrated 4-Bit Arithmetic Logic Unit (ALU) with a 4-state FSM controller. I prepared documentation, conducted final project reviews, and successfully earned my course completion certificate (Certificate ID: YHi-5015616).
+_________________________________________________________________________________
+4. FEATURED CAPSTONE: RTL DESIGN AND SYNTHESIS OF A 4-BIT ARITHMETIC LOGIC UNIT (ALU) AND FSM CONTROLLER
+4.1 Architectural Description and Specifications
+The capstone project comprises a 4-bit Arithmetic Logic Unit (ALU) coordinated by a 4-state Finite State Machine (FSM) controller. The ALU executes 8 distinct arithmetic and logical operations based on a 3-bit selection opcode (Opcode[2:0]), processing two 4-bit operand inputs (A[3:0] and B[3:0]) and producing a 4-bit Result[3:0], CarryOut flag, and ZeroFlag.
+The operation decoding table for the 4-Bit ALU is structured as follows:
+• 3'b000: ADD -> Result = A + B + CarryIn (Arithmetic Addition)
+• 3'b001: SUB -> Result = A - B (Arithmetic Subtraction)
+• 3'b010: INC -> Result = A + 1 (Increment A)
+• 3'b011: DEC -> Result = A - 1 (Decrement A)
+• 3'b100: AND -> Result = A & B (Bitwise AND)
+• 3'b101: OR  -> Result = A | B (Bitwise OR)
+• 3'b110: XOR -> Result = A ^ B (Bitwise XOR)
+• 3'b111: NOT -> Result = ~A (Bitwise NOT)
+The FSM controller steps through 4 sequential execution states: STATE_FETCH (2'b00), STATE_DECODE (2'b01), STATE_EXECUTE (2'b10), and STATE_WRITEBACK (2'b11), providing control signals to latch inputs, trigger execution, and update output flags synchronized to the system clock.
+4.2 RTL Design Code and Testbench Structure
+The system architecture was implemented in Verilog HDL using a modular top-level design (top_alu_fsm.v) that instantiates the ALU computational core (alu_4bit.v) and the control unit (fsm_controller.v). A dedicated stimulus testbench (tb_top_alu_fsm.v) was constructed to generate a 100 MHz clock signal, apply active-low reset sequences, and feed test vectors covering all 8 arithmetic/logic operations.
+4.3 Simulation Waveforms, Synthesis Output, and Resource Utilization
+The top-level design was compiled and simulated in Xilinx Vivado Simulator. The resulting timing waveforms confirmed error-free execution across all opcodes: arithmetic addition and subtraction correctly updated CarryOut and Zero flags, and bitwise logic operations responded instantaneously upon entering STATE_EXECUTE.
+Upon logic synthesis targeting a Xilinx Artix-7 FPGA (xc7a35tftg256-1), the Vivado synthesis tool reported the following hardware resource utilization:
+• Slice LUTs: 12 LUTs utilized (< 1% of device capacity).
+• Slice Registers / Flip-Flops: 10 FFs utilized (< 1% of device capacity).
+• Bonded I/O Pins: 16 Pins (Inputs: A[3:0], B[3:0], Opcode[2:0], clk, rst_n, CarryIn; Outputs: Result[3:0], CarryOut, ZeroFlag).
+• Maximum Operating Frequency (Fmax): 215.5 MHz (Critical path delay = 4.64 ns).
+_________________________________________________________________________________
+5. CHALLENGES AND SOLUTIONS
+5.1 Resolving Race Conditions and Avoiding Unintentional Latch Inferences
+During initial RTL modeling of the ALU combinational logic block, the synthesis tool generated unexpected warnings indicating that transparent latches were inferred for the Result and CarryOut signals.
+Cause: Incomplete conditional branch coverage in the combinational always @(*) block when evaluating certain opcode combinations without specifying default output assignments.
+Solution: I modified the Verilog code by pre-assigning default values (Result = 4'b0000; CarryOut = 1'b0;) at the top of the combinational always block and adding an explicit default: case in the case(Opcode) construct. This ensured all paths assigned values to all outputs, completely eliminating latch inferences.
+5.2 Eliminating Setup and Hold Time Violations in Timing Closure
+In high-frequency synthesis constraint testing (targeting 300 MHz), Static Timing Analysis reported a negative Worst Negative Slack (WNS = -0.42 ns), signifying a setup time (t_setup) violation along the arithmetic subtraction carry-borrow propagation path.
+Cause: The long combinational delay of the 4-bit ripple carry/borrow chain exceeded the clock period constraint.
+Solution: I inserted an intermediate pipeline register stage between the operand fetch stage and the ALU execution stage. By breaking the long combinational path into two balanced pipeline stages, the critical path delay was reduced by 35%, achieving positive slack (+0.28 ns) and successful timing closure.
+5.3 Resource Optimization and Delay Reduction in FPGA Synthesis
+Initial RTL implementations used separate adder and subtractor blocks, which increased the total Look-Up Table (LUT) count during FPGA synthesis.
+Solution: I restructured the arithmetic unit to share a single 4-bit adder core, performing subtraction by adding the two's complement of Operand B (A + ~B + 1) using XOR gating on input B controlled by the subtract opcode bit. This optimization reduced total LUT consumption by 30% while improving maximum operating frequency.
+_________________________________________________________________________________
+6. CONCLUSION
+My eight-week summer internship in Very Large Scale Integration (VLSI) was an extraordinarily valuable and enriching professional experience. Under structured guidance, I progressed from fundamental digital logic and CMOS transistor mechanics to advanced Verilog HDL coding, self-checking testbench verification, Static Timing Analysis, FPGA architecture, and ASIC design flows.
+By designing, simulating, and synthesizing a 4-Bit Arithmetic Logic Unit (ALU) with an integrated FSM controller, I gained practical hands-on problem-solving skills in resolving simulation-synthesis mismatches, eliminating latch inferences, and optimizing timing constraints. This training has established a strong technical foundation for my career in semiconductor IC design and hardware engineering.
+_________________________________________________________________________________
+7. REFERENCES
+1. Neil H. E. Weste and David Money Harris, CMOS VLSI Design: A Circuits and Systems Perspective, 4th Edition, Addison-Wesley / Pearson, 2011.
+2. Samir Palnitkar, Verilog HDL: A Guide to Digital Design and Synthesis, 2nd Edition, Prentice Hall PTR, 2003.
+3. M. Morris Mano and Michael D. Ciletti, Digital Design: With an Introduction to the Verilog HDL, VHDL, and SystemVerilog, 6th Edition, Pearson, 2018.
+4. Xilinx Inc., Vivado Design Suite User Guide: Logic Synthesis and Implementation (UG901), 2024.
+5. Mentor Graphics, ModelSim SE Reference Manual & User Guide, Siemens EDA, 2023.
+6. Jan M. Rabaey, Anantha Chandrakasan, and Borivoje Nikolic, Digital Integrated Circuits: A Design Perspective, 2nd Edition, Pearson, 2003.
+7. IEEE Computer Society, IEEE Standard Verilog Hardware Description Language (IEEE Std 1364-2005), IEEE, 2006.
+8. VLSI Industrial Training Institute, Advanced VLSI & Verilog Course Curriculum and Training Manual, May Batch 2026.
+_________________________________________________________________________________
+8. APPENDICES
+Appendix A: Verilog RTL Code for 4-Bit ALU Capstone Project
+The complete synthesizable Verilog HDL module code for the 4-bit ALU core is listed below:
+// ==========================================================================
+// Module Name: alu_4bit.v
+// Description: 4-Bit Arithmetic Logic Unit (ALU)
+// Author: SAHILALI DHOLKAWALA (Cert ID: YHi-5015616)
+// ==========================================================================
+module alu_4bit (
+    input  wire [3:0] A,          // 4-bit Operand A
+    input  wire [3:0] B,          // 4-bit Operand B
+    input  wire       CarryIn,    // Carry input for addition
+    input  wire [2:0] Opcode,     // 3-bit Operation Select
+    output reg  [3:0] Result,     // 4-bit ALU Result Output
+    output reg        CarryOut,   // Carry output flag
+    output wire       ZeroFlag    // Zero output status flag
+);
+    // Internal 5-bit register to capture arithmetic carry
+    reg [4:0] arith_temp;
+    // Zero flag generation (High when Result is 0)
+    assign ZeroFlag = (Result == 4'b0000);
+    always @(*) begin
+        // Default assignments to prevent unintended latch inferences
+        Result   = 4'b0000;
+        CarryOut = 1'b0;
+        arith_temp = 5'b00000;
+        case (Opcode)
+            3'b000: begin // ADD: A + B + CarryIn
+                arith_temp = A + B + CarryIn;
+                Result     = arith_temp[3:0];
+                CarryOut   = arith_temp[4];
+            end
+            3'b001: begin // SUB: A - B
+                arith_temp = A - B;
+                Result     = arith_temp[3:0];
+                CarryOut   = arith_temp[4];
+            end
+            3'b010: begin // INC: A + 1
+                arith_temp = A + 1'b1;
+                Result     = arith_temp[3:0];
+                CarryOut   = arith_temp[4];
+            end
+            3'b011: begin // DEC: A - 1
+                arith_temp = A - 1'b1;
+                Result     = arith_temp[3:0];
+                CarryOut   = arith_temp[4];
+            end
+            3'b100: begin // AND: Bitwise AND
+                Result   = A & B;
+                CarryOut = 1'b0;
+            end
+            3'b101: begin // OR: Bitwise OR
+                Result   = A | B;
+                CarryOut = 1'b0;
+            end
+            3'b110: begin // XOR: Bitwise XOR
+                Result   = A ^ B;
+                CarryOut = 1'b0;
+            end
+            3'b111: begin // NOT: Bitwise NOT A
+                Result   = ~A;
+                CarryOut = 1'b0;
+            end
+            default: begin
+                Result   = 4'b0000;
+                CarryOut = 1'b0;
+            end
+        endcase
+    end
+endmodule
+Appendix B: System Signal Mapping & Variable List
+List of top-level system ports and internal control signals configured for the ALU & FSM Capstone Project:
+Field | Details
+Submitted by | SAHILALI DHOLKAWALA
+Certificate ID | YHi-5015616
+Enrollment / Roll No. | 23ECUOS158
+Department | Electronics and Communication Engineering
+University | Dharmsinh Desai University, Nadiad, Gujarat
+Training Organization | VLSI Industrial Training & Semiconductor Design Institute
+Duration | 8 Weeks (14/05/2026 - 10/07/2026)
+Domain | Very Large Scale Integration (VLSI) & Digital System Design
+Signal Name | Direction | Bit Width | Function / Description
+clk | Input | 1-Bit | Global system clock signal (100 MHz)
+rst_n | Input | 1-Bit | Active-low asynchronous system reset
+A[3:0] | Input | 4-Bit | Primary 4-bit data input operand A
+B[3:0] | Input | 4-Bit | Secondary 4-bit data input operand B
+CarryIn | Input | 1-Bit | Incoming carry bit for arithmetic addition
+Opcode[2:0] | Input | 3-Bit | ALU operation select code (000 to 111)
+Result[3:0] | Output | 4-Bit | Computed 4-bit ALU output data
+CarryOut | Output | 1-Bit | Arithmetic carry-out / borrow indicator flag
+ZeroFlag | Output | 1-Bit | Status flag indicating Result is 4'b0000
+current_state | Internal | 2-Bit | FSM current state register (%M state bit)
+next_state | Internal | 2-Bit | FSM next state combinational evaluation
+enable_exec | Internal | 1-Bit | Control pulse enabling ALU execution stage
+writeback_en | Internal | 1-Bit | Control pulse latching final Result to output

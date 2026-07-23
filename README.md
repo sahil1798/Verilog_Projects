@@ -21,7 +21,10 @@ Verilog_Projects/
 │   ├── UART_Transmitter/            # Synthesizable 9600 Baud UART TX
 │   │   ├── src/
 │   │   └── tb/
-│   └── UART_Receiver/               # Oversampled 9600 Baud UART RX (with loopback TB)
+│   ├── UART_Receiver/               # Oversampled 9600 Baud UART RX (with loopback TB)
+│   │   ├── src/
+│   │   └── tb/
+│   └── SPI_Controller/              # Full-Duplex SPI Master & Slave Controller (Mode 0)
 │       ├── src/
 │       └── tb/
 └── Foundational_Blocks/             # Standard digital logic blocks
@@ -48,6 +51,7 @@ Verilog_Projects/
 *   **Traffic Light Controller (`Complex_Systems/Traffic_Light_Controller`):** A Moore FSM managing a Main Street/Side Street intersection using a clocked cycle counter for state durations.
 *   **UART Transmitter (`Complex_Systems/UART_Transmitter`):** A synthesizable UART Transmitter operating at 9600 Baud (for a 100 MHz clock). Uses a Moore FSM to shift out 8 data bits LSB-first, bookended by start and stop bits, with status flags (`tx_active`, `tx_done`).
 *   **UART Receiver (`Complex_Systems/UART_Receiver`):** A synthesizable UART Receiver featuring a 16x oversampling baud rate clock divider (651 clock cycles per sample tick) and an FSM-based noise/glitch filter. Instantiates both TX and RX in a loopback testbench to verify end-to-end serial data transfer.
+*   **SPI Controller (`Complex_Systems/SPI_Controller`):** A full-duplex SPI Master (`spi_master.v`) and Slave (`spi_slave.v`) operating in SPI Mode 0 (`CPOL=0`, `CPHA=0`). Implements MSB-first serial shifting over a 4-wire bus (`SCLK`, `CS`, `MOSI`, `MISO`), verified with a system-level dual-transfer testbench (`spi_top_tb.v`).
 
 ---
 
